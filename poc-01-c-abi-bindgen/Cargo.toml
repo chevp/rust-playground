@@ -1,0 +1,17 @@
+[package]
+name = "poc-01-c-abi-bindgen"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+publish = false
+
+[lib]
+crate-type = ["rlib"]
+
+[dependencies]
+thiserror = { workspace = true }
+
+[build-dependencies]
+cc = { workspace = true }
+# bindgen = "0.69"   # uncomment to switch to auto-generated FFI (requires libclang)

@@ -1,0 +1,4 @@
+target/
+
+# Tauri auto-generated (schemas, ACL manifests, etc.)
+poc-03-tauri-embed/src-tauri/gen/

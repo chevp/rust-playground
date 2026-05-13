@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>frostgfx + Tauri POC</title>
+  <style>
+    body { font-family: system-ui, sans-serif; background: #0b0e14; color: #d6deeb; padding: 2rem; }
+    button { font-size: 1rem; padding: 0.6rem 1.2rem; background: #1f6feb; color: white; border: 0; border-radius: 4px; cursor: pointer; }
+    button:hover { background: #388bfd; }
+    pre { background: #161b22; padding: 1rem; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>frostgfx + Tauri host POC</h1>
+  <p>This WebView is owned by Tauri. Below we ask Tauri for the native HWND and pretend to hand it to frostgfx.</p>
+  <button id="start">Start engine</button>
+  <pre id="out">— click "Start engine" —</pre>
+
+  <script>
+    const out = document.getElementById('out');
+    document.getElementById('start').addEventListener('click', async () => {
+      try {
+        const { invoke } = window.__TAURI__.core;
+        const result = await invoke('start_engine');
+        out.textContent = result;
+      } catch (e) {
+        out.textContent = 'error: ' + e;
+      }
+    });
+  </script>
+</body>
+</html>
