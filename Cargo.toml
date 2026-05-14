@@ -8,6 +8,7 @@ members = [
     "poc-04-ipc-stdio/client",
     "poc-04-ipc-stdio/shared",
     "poc-05-frostgfx-cxx",
+    "poc-06-min-launcher",
 ]
 exclude = ["poc-05-frostgfx-cxx/frostgfx"]
 
