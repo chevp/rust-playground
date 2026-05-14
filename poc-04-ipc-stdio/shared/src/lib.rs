@@ -73,7 +73,10 @@ pub enum Message {
         state: Option<EngineState>,
     },
     /// Asynchronous engine-side event, not tied to any command.
-    Event { name: String, payload: serde_json::Value },
+    Event {
+        name: String,
+        payload: serde_json::Value,
+    },
 }
 
 /// A command annotated with the id used to correlate the response.

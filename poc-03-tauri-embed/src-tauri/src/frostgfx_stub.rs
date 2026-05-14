@@ -35,7 +35,10 @@ pub struct Engine {
 
 impl Engine {
     pub fn new() -> Self {
-        Self { state: EngineState::Created, _hwnd: std::ptr::null_mut() }
+        Self {
+            state: EngineState::Created,
+            _hwnd: std::ptr::null_mut(),
+        }
     }
 
     pub fn initialize(&mut self, cfg: EngineConfig) -> Result<(), Error> {

@@ -14,7 +14,9 @@ use frostgfx_ipc_shared::{ClientFrame, Command, Message, Status};
 fn engine_binary() -> anyhow::Result<PathBuf> {
     // Sibling binary in the same cargo target dir.
     let me = std::env::current_exe().context("current_exe")?;
-    let dir = me.parent().ok_or_else(|| anyhow!("no parent dir for exe"))?;
+    let dir = me
+        .parent()
+        .ok_or_else(|| anyhow!("no parent dir for exe"))?;
     let mut path = dir.join("frostgfx-engine-stub");
     if cfg!(windows) {
         path.set_extension("exe");

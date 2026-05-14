@@ -18,17 +18,29 @@ struct EngineStub {
 
 impl EngineStub {
     fn new() -> Self {
-        Self { state: EngineState::Created }
+        Self {
+            state: EngineState::Created,
+        }
     }
 
     fn handle(&mut self, cmd: Command, id: u64, out: &mut impl Write) -> anyhow::Result<bool> {
         let (msg, keep_running) = match cmd {
-            Command::Initialize { window_title, width, height, headless } => {
-                eprintln!("[engine] initialize: {window_title} {width}x{height} headless={headless}");
+            Command::Initialize {
+                window_title,
+                width,
+                height,
+                headless,
+            } => {
+                eprintln!(
+                    "[engine] initialize: {window_title} {width}x{height} headless={headless}"
+                );
                 self.state = EngineState::Ready;
                 (response_state(id, Status::Ok, self.state), true)
             }
-            Command::LoadScene { scene_uri, preview_only } => {
+            Command::LoadScene {
+                scene_uri,
+                preview_only,
+            } => {
                 eprintln!("[engine] load_scene: {scene_uri} preview={preview_only}");
                 if matches!(self.state, EngineState::Created) {
                     (response_err(id, "initialize before load_scene"), true)
@@ -42,7 +54,15 @@ impl EngineStub {
                 if self.state == EngineState::Created {
                     (response_err(id, "engine not ready"), true)
                 } else {
-                    (Message::Response { id, status: Status::Ok, error: None, state: None }, true)
+                    (
+                        Message::Response {
+                            id,
+                            status: Status::Ok,
+                            error: None,
+                            state: None,
+                        },
+                        true,
+                    )
                 }
             }
             Command::GetState => (response_state(id, Status::Ok, self.state), true),
@@ -57,7 +77,12 @@ impl EngineStub {
 }
 
 fn response_state(id: u64, status: Status, state: EngineState) -> Message {
-    Message::Response { id, status, error: None, state: Some(state) }
+    Message::Response {
+        id,
+        status,
+        error: None,
+        state: Some(state),
+    }
 }
 
 fn response_err(id: u64, msg: &str) -> Message {
