@@ -1,0 +1,3 @@
+[submodule "poc-05-frostgfx-cxx/frostgfx"]
+	path = poc-05-frostgfx-cxx/frostgfx
+	url = https://github.com/chevp/frostgfx.git

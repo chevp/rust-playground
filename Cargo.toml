@@ -7,7 +7,9 @@ members = [
     "poc-04-ipc-stdio/engine-stub",
     "poc-04-ipc-stdio/client",
     "poc-04-ipc-stdio/shared",
+    "poc-05-frostgfx-cxx",
 ]
+exclude = ["poc-05-frostgfx-cxx/frostgfx"]
 
 [workspace.package]
 edition = "2021"

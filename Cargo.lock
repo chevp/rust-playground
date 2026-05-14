@@ -2374,6 +2374,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "poc-05-frostgfx-cxx"
+version = "0.1.0"
+dependencies = [
+ "cxx",
+ "cxx-build",
+]
+
+[[package]]
 name = "potential_utf"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
