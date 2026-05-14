@@ -32,7 +32,11 @@ mod ffi {
         fn new_engine() -> UniquePtr<FrostEngineSimple>;
 
         fn initialize(self: Pin<&mut FrostEngineSimple>, cfg: &EngineConfigDto) -> bool;
-        fn load_scene(self: Pin<&mut FrostEngineSimple>, scene_uri: &str, preview_only: bool) -> bool;
+        fn load_scene(
+            self: Pin<&mut FrostEngineSimple>,
+            scene_uri: &str,
+            preview_only: bool,
+        ) -> bool;
         fn update_camera(self: Pin<&mut FrostEngineSimple>, cam: &Camera) -> bool;
         fn activate(self: Pin<&mut FrostEngineSimple>) -> bool;
         fn shutdown(self: Pin<&mut FrostEngineSimple>) -> bool;
@@ -62,7 +66,10 @@ fn main() {
     // Demonstrate error reporting across the cxx bridge.
     let ok = engine.pin_mut().load_scene("", false);
     assert!(!ok);
-    println!("empty scene rejected; last_error = {:?}", engine.last_error());
+    println!(
+        "empty scene rejected; last_error = {:?}",
+        engine.last_error()
+    );
 
     assert!(engine.pin_mut().load_scene("scenes/hello.scene.xml", false));
     println!("scene loaded, state = {}", engine.state());

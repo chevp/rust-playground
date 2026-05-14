@@ -59,7 +59,13 @@ fn main() {
             .nth(3)
             .map(Path::to_path_buf)
             .expect("derive cargo target dir");
-        for dll in ["frostgfx.dll", "lua.dll", "lz4d.dll", "sqlite3.dll", "tinyxml2.dll"] {
+        for dll in [
+            "frostgfx.dll",
+            "lua.dll",
+            "lz4d.dll",
+            "sqlite3.dll",
+            "tinyxml2.dll",
+        ] {
             let src = bin_dir.join(dll);
             if src.exists() {
                 let dst = target_dir.join(dll);

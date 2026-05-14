@@ -50,11 +50,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Tauri Linux dependencies
+        # libayatana-appindicator3-dev replaces libappindicator3-dev on Ubuntu
+        # 24.04 — installing both at once is a conflict (E: held broken packages).
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
             librsvg2-dev \
             libayatana-appindicator3-dev \
             libxdo-dev \
@@ -86,10 +87,10 @@ jobs:
         with:
           workspaces: ". -> target"
           shared-key: poc-04
-      - run: cargo fmt -p shared -p engine-stub -p client -- --check
-      - run: cargo clippy -p shared -p engine-stub -p client --all-targets -- -D warnings
-      - run: cargo test -p shared -p engine-stub -p client
-      - run: cargo build -p shared -p engine-stub -p client
+      - run: cargo fmt -p frostgfx-ipc-shared -p frostgfx-engine-stub -p frostgfx-ipc-client -- --check
+      - run: cargo clippy -p frostgfx-ipc-shared -p frostgfx-engine-stub -p frostgfx-ipc-client --all-targets -- -D warnings
+      - run: cargo test -p frostgfx-ipc-shared -p frostgfx-engine-stub -p frostgfx-ipc-client
+      - run: cargo build -p frostgfx-ipc-shared -p frostgfx-engine-stub -p frostgfx-ipc-client
 
   poc-05-frostgfx-cxx:
     name: poc-05 frostgfx-cxx (fmt only)
