@@ -9,6 +9,7 @@ members = [
     "poc-04-ipc-stdio/shared",
     "poc-05-frostgfx-cxx",
     "poc-06-min-launcher",
+    "poc-07-tauri-vue/src-tauri",
 ]
 exclude = ["poc-05-frostgfx-cxx/frostgfx"]
 

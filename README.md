@@ -32,6 +32,7 @@ illustrate four different ways around that.
 | [poc-02-cxx-bridge](poc-02-cxx-bridge/) | [`cxx`](https://cxx.rs) bridges Rust ↔ a small C++ subset of FrostEngine | Cleanest Rust code, but `std::variant`/`std::future` are unsupported — only a subset is reachable |
 | [poc-03-tauri-embed](poc-03-tauri-embed/) | Tauri 2 app passes its window HWND to `EngineConfig::parentWindowHandle` | Solves windowing, not FFI. Must be combined with poc-01 or poc-02 |
 | [poc-04-ipc-stdio](poc-04-ipc-stdio/) | frostgfx runs as a separate process, Rust client talks JSON-over-stdio | No FFI at all. Process-isolation cost; latency for high-frequency commands |
+| [poc-07-tauri-vue](poc-07-tauri-vue/) | Tauri 2 + Vue 3 + Vite — minimal IPC roundtrip | Unrelated to frostgfx; reference setup for a real Vue frontend with Rust backend |
 
 ## Build
 

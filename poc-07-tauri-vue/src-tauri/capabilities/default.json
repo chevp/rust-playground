@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Default capabilities for poc-07-tauri-vue",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}
