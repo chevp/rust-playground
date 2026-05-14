@@ -2,7 +2,7 @@
 //!
 //! See `c-shim/frostgfx_c.h` for the contract this crate wraps.
 
-pub mod ffi;
 pub mod engine;
+pub mod ffi;
 
-pub use engine::{Engine, EngineConfig, EngineState, Camera, Error};
+pub use engine::{Camera, Engine, EngineConfig, EngineState, Error};

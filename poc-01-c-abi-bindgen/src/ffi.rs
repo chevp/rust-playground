@@ -85,9 +85,5 @@ extern "C" {
 
     pub fn frostgfx_get_state(e: *const frostgfx_engine) -> frostgfx_engine_state;
     pub fn frostgfx_get_window_handle(e: *const frostgfx_engine) -> *mut c_void;
-    pub fn frostgfx_last_error(
-        e: *const frostgfx_engine,
-        buf: *mut c_char,
-        cap: usize,
-    ) -> usize;
+    pub fn frostgfx_last_error(e: *const frostgfx_engine, buf: *mut c_char, cap: usize) -> usize;
 }

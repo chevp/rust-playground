@@ -81,7 +81,10 @@ impl Engine {
         if raw.is_null() {
             return Err(Error::NullEngine);
         }
-        Ok(Self { raw, _strings: Vec::new() })
+        Ok(Self {
+            raw,
+            _strings: Vec::new(),
+        })
     }
 
     pub fn initialize(&mut self, cfg: &EngineConfig) -> Result<(), Error> {
@@ -165,10 +168,7 @@ impl Drop for Engine {
     }
 }
 
-fn push_cstring(
-    bag: &mut Vec<CString>,
-    s: &str,
-) -> Result<*const std::os::raw::c_char, NulError> {
+fn push_cstring(bag: &mut Vec<CString>, s: &str) -> Result<*const std::os::raw::c_char, NulError> {
     if s.is_empty() {
         return Ok(ptr::null());
     }
