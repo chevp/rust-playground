@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+  RUSTFLAGS: "-D warnings"
+
+jobs:
+  poc-01-c-abi-bindgen:
+    name: poc-01 c-abi-bindgen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+          shared-key: poc-01
+      - run: cargo fmt -p poc-01-c-abi-bindgen -- --check
+      - run: cargo clippy -p poc-01-c-abi-bindgen --all-targets -- -D warnings
+      - run: cargo test -p poc-01-c-abi-bindgen
+      - run: cargo build -p poc-01-c-abi-bindgen --examples
+
+  poc-02-cxx-bridge:
+    name: poc-02 cxx-bridge
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+          shared-key: poc-02
+      - run: cargo fmt -p poc-02-cxx-bridge -- --check
+      - run: cargo clippy -p poc-02-cxx-bridge --all-targets -- -D warnings
+      - run: cargo test -p poc-02-cxx-bridge
+      - run: cargo build -p poc-02-cxx-bridge
+
+  poc-03-tauri-embed:
+    name: poc-03 tauri-embed
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Tauri Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            libayatana-appindicator3-dev \
+            libxdo-dev \
+            libssl-dev \
+            build-essential \
+            curl \
+            wget \
+            file
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+          shared-key: poc-03
+      - run: cargo fmt -p frostgfx-tauri-poc -- --check
+      - run: cargo clippy -p frostgfx-tauri-poc --all-targets -- -D warnings
+      - run: cargo build -p frostgfx-tauri-poc
+
+  poc-04-ipc-stdio:
+    name: poc-04 ipc-stdio
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: ". -> target"
+          shared-key: poc-04
+      - run: cargo fmt -p shared -p engine-stub -p client -- --check
+      - run: cargo clippy -p shared -p engine-stub -p client --all-targets -- -D warnings
+      - run: cargo test -p shared -p engine-stub -p client
+      - run: cargo build -p shared -p engine-stub -p client
+
+  poc-05-frostgfx-cxx:
+    name: poc-05 frostgfx-cxx (fmt only)
+    runs-on: ubuntu-latest
+    # poc-05 consumes a pre-built frostgfx artifact — it must NOT rebuild
+    # the frostgfx submodule here. To expand this job: wait until frostgfx's
+    # own CI publishes a Linux artifact, then download it (e.g. gh release
+    # download or actions/download-artifact) and point build.rs at it by
+    # exporting FROSTGFX_BUILD_DIR (recommended) or extracting into
+    # frostgfx/build/. The workspace-sibling fallback in build.rs
+    # (../../../frameworks/frostgfx/build/) is local-dev only and does NOT
+    # work in CI — only this repo is checked out on the runner.
+    # build.rs also needs a Linux path fix (no Debug/ segment,
+    # libfrostgfx.so instead of .lib/.dll).
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+      - run: cargo fmt -p poc-05-frostgfx-cxx -- --check
