@@ -17,7 +17,6 @@ fn start_engine(window: tauri::WebviewWindow) -> Result<String, String> {
             window_width: 1280,
             window_height: 720,
             parent_window_handle: parent_hwnd,
-            ..Default::default()
         })
         .map_err(|e| format!("initialize: {e:?}"))?;
 
